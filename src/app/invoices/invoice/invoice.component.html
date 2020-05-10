@@ -1,0 +1,58 @@
+
+<div class="container">
+    <mat-card *ngIf="state$ | async as state">
+      <mat-card-header>
+        <mat-card-title
+          >{{ state.employee.givenName }} {{ state.employee.familyName }}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="invoiceForm">
+          <div formArrayName="timeEntries">
+            <div
+              *ngFor="let entry of timeEntries.controls; let idx = index"
+              [formGroupName]="idx"
+              class="form-row"
+            >
+              <mat-form-field appearance="outline">
+                <mat-label>Date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date" />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+  
+              <mat-form-field appearance="outline">
+                <mat-label>Start Time</mat-label>
+                <input matInput formControlName="start" type="time" />
+              </mat-form-field>
+  
+              <mat-form-field appearance="outline">
+                <mat-label>End Time</mat-label>
+                <input matInput formControlName="end" type="time" />
+              </mat-form-field>
+  
+              <button mat-button (click)="removeTimeEntry(idx)" class="mt-1">
+                <i class="material-icons">delete</i>Remove
+              </button>
+            </div>
+            <button mat-button color="primary" (click)="addTimeEntry()">
+              <i class="material-icons">add_circle_outline</i>&nbsp;Add a day
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="submitInvoice(state.invoiceId)"
+        >
+          Save and Submit
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  
