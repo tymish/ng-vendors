@@ -1,12 +1,14 @@
 {
   "name": "ng-vendors",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "gen-api": "ng-openapi-gen --input http://127.0.0.1:5000/swagger/v1/swagger.json --output src/app/core/api"
   },
   "browserslist": [
     "Chrome >= 61",
@@ -19,7 +21,6 @@
     "FirefoxAndroid >= 66",
     "not IE 11"
   ],
-  "private": true,
   "dependencies": {
     "@angular/animations": "~9.1.6",
     "@angular/cdk": "^9.2.3",
@@ -52,6 +53,7 @@
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~3.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
+    "ng-openapi-gen": "^0.11.1",
     "protractor": "~5.4.3",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
