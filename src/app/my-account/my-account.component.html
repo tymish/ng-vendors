@@ -1,1 +1,6 @@
 <p>my-account works!</p>
+
+<p *ngIf="user$ | async as user"> {{user | json}}</p>
+
+
+<p *ngIf="claims$ | async as claims">{{claims | json}}</p> 

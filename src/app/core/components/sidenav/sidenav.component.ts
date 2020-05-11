@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatSidenav} from '@angular/material/sidenav';
+import {AuthService} from '../../auth/auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -6,10 +8,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidenav.component.scss']
 })
 export class SidenavComponent implements OnInit {
+  @ViewChild('sidenav') sidenav: MatSidenav;
 
-  constructor() { }
+  sideNavOpened = false;
+  sideNavMode: 'side' | 'over' = 'over';
 
-  ngOnInit(): void {
+  constructor(public auth: AuthService) {}
+
+  ngOnInit() {
+    if (screen.width > 975) {
+      this.sideNavMode = 'side';
+      this.sideNavOpened = true;
+    }
   }
 
+  toggle() {
+    this.sidenav.toggle();
+  }
 }

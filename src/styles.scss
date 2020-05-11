@@ -1,4 +1,37 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+    margin: 0;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+  }
+  mat-card {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+  
+  mat-sidenav.fixed {
+    position: fixed;
+  }
+  
+  mat-sidenav {
+    min-width: 256px;
+  }
+  
+  mat-sidenav,
+  mat-sidenav-content {
+    padding-top: 64px;
+  }
+  
+  .container {
+    padding: 0.6em;
+    max-width: 600px;
+  }
+  
+  @media only screen and (min-width: 600px) {
+    .container {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
