@@ -5,17 +5,15 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-my-account',
   templateUrl: './my-account.component.html',
-  styleUrls: ['./my-account.component.scss']
+  styleUrls: ['./my-account.component.scss'],
 })
 export class MyAccountComponent implements OnInit {
-
   public user$: Observable<any>;
   public claims$: Observable<any>;
-  constructor(public auth: AuthService) { }
+  constructor(public auth: AuthService) {}
 
   ngOnInit(): void {
     this.user$ = this.auth.getUser$();
-    this.claims$ = this.auth.getClaims$({});
+    this.claims$ = this.auth.getIdTokenClaims$();
   }
-
 }

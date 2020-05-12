@@ -1,5 +1,9 @@
-import {Injectable} from '@angular/core';
-import createAuth0Client from '@auth0/auth0-spa-js';
+import { Injectable } from '@angular/core';
+import createAuth0Client, {
+  GetTokenSilentlyOptions,
+  GetUserOptions,
+  getIdTokenClaimsOptions,
+} from '@auth0/auth0-spa-js';
 import Auth0Client from '@auth0/auth0-spa-js/dist/typings/Auth0Client';
 import {
   from,
@@ -7,19 +11,20 @@ import {
   Observable,
   BehaviorSubject,
   combineLatest,
-  throwError
+  throwError,
 } from 'rxjs';
-import {tap, catchError, concatMap, shareReplay} from 'rxjs/operators';
-import {Router} from '@angular/router';
-import {environment} from 'src/environments/environment';
+import { tap, catchError, concatMap, shareReplay, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { Auth0JsService } from './auth0-js.service';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
   auth0Client$ = (from(
     createAuth0Client({
       domain: environment.auth.domain,
       client_id: environment.auth.client_id,
-      redirect_uri: `${window.location.origin}`
+      redirect_uri: `${window.location.origin}`,
     })
   ) as Observable<Auth0Client>).pipe(
     shareReplay(1),
@@ -45,17 +50,23 @@ export class AuthService {
     this.handleAuthCallback();
   }
 
-  getUser$(options?): Observable<any> {
+  getUser$(options?: GetUserOptions): Observable<any> {
     return this.auth0Client$.pipe(
       concatMap((client: Auth0Client) => from(client.getUser(options))),
       tap((user) => this.userProfileSubject$.next(user))
     );
   }
 
-  getClaims$(options?): Observable<any> {
+  getAuthToken$(options?: GetTokenSilentlyOptions): Observable<any> {
+    return this.auth0Client$.pipe(
+      concatMap((client: Auth0Client) => from(client.getTokenSilently(options)))
+    );
+  }
+
+  getIdTokenClaims$(options?: getIdTokenClaimsOptions): Observable<any> {
     return this.auth0Client$.pipe(
       concatMap((client: Auth0Client) => from(client.getIdTokenClaims(options)))
-    )
+    );
   }
 
   private localAuthSetup() {
@@ -74,7 +85,7 @@ export class AuthService {
     this.auth0Client$.subscribe((client: Auth0Client) => {
       client.loginWithRedirect({
         redirect_uri: `${window.location.origin}`,
-        appState: {target: redirectPath}
+        appState: { target: redirectPath },
       });
     });
   }
@@ -105,7 +116,7 @@ export class AuthService {
     this.auth0Client$.subscribe((client: Auth0Client) => {
       client.logout({
         client_id: environment.auth.client_id,
-        returnTo: `${window.location.origin}`
+        returnTo: `${window.location.origin}`,
       });
     });
   }
