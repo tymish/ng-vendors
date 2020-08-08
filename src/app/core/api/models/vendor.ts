@@ -1,11 +1,10 @@
 /* tslint:disable */
-import { Invoice } from './invoice';
-export interface Employee {
+export interface Vendor {
   email?: null | string;
-  employeeNumber?: number;
   familyName?: null | string;
   givenName?: null | string;
   hourlyPay?: number;
   id?: string;
-  invoices?: null | Array<Invoice>;
+  mobilePhone?: null | string;
+  password?: null | string;
 }

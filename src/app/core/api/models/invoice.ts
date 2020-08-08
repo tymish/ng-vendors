@@ -1,13 +1,13 @@
 /* tslint:disable */
-import { Employee } from './employee';
 import { TimeEntry } from './time-entry';
 export interface Invoice {
-  employee?: null | Employee;
-  employeeId?: string;
+  created?: string;
   id?: string;
   paid?: null | string;
-  payPeriod?: string;
-  sent?: null | string;
+  paidAmount?: number;
+  paymentReference?: null | string;
   submitted?: null | string;
   timeEntries?: null | Array<TimeEntry>;
+  totalAmount?: number;
+  vendorId?: string;
 }

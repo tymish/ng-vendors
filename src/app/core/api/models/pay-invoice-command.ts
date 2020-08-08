@@ -1,5 +1,6 @@
 /* tslint:disable */
 export interface PayInvoiceCommand {
-  id?: string;
-  reference: string;
+  invoiceId?: string;
+  paymentAmount: number;
+  paymentReference: string;
 }
