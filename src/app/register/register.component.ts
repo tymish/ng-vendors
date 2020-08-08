@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VendorsService } from '../core/api/services';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -7,16 +8,22 @@ import { VendorsService } from '../core/api/services';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  private vendorId: string;
   hide = true;
-  constructor(private readonly vendors: VendorsService) { }
+  constructor(
+    private readonly route: ActivatedRoute,
+    private readonly vendors: VendorsService) { }
 
   ngOnInit(): void {
+    this.vendorId = this.route.snapshot.params['id']
   }
 
   register() {
+    // Validate password matches and all that
     this.vendors.registerVendor({body: {
-      mobilePhone: '7806665555', 
-      vendorId: 'guid'
+      mobilePhone: '7806665555',
+      password: 'password',
+      vendorId: this.vendorId
     }}).subscribe();
   }
 }

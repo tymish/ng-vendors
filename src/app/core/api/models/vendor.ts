@@ -1,5 +1,6 @@
 /* tslint:disable */
 export interface Vendor {
+  created?: string;
   email?: null | string;
   familyName?: null | string;
   givenName?: null | string;
@@ -7,4 +8,5 @@ export interface Vendor {
   id?: string;
   mobilePhone?: null | string;
   password?: null | string;
+  registered?: null | string;
 }

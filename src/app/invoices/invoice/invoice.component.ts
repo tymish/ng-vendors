@@ -1,15 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FormBuilder, FormGroup, FormArray} from '@angular/forms';
-import {map, switchMap} from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 import * as moment from 'moment';
 import {InvoicesService} from '../../core/api/services';
-import {TimeEntry, Employee} from '../../core/api/models';
+import {TimeEntry} from '../../core/api/models';
 import {Observable, of, forkJoin} from 'rxjs';
 
 export interface State {
   invoiceId: string;
-  employee: Employee;
 }
 
 @Component({
@@ -29,12 +28,12 @@ export class InvoiceComponent implements OnInit {
   ngOnInit(): void {
     const id$ = this.route.params.pipe(map((p) => p.id as string));
 
-    this.state$ = id$.pipe(
-      switchMap((id) =>
-        forkJoin(of(id), this.invoices.getEmployeeByInvoiceId({id: id}))
-      ),
-      map((result) => ({invoiceId: result[0], employee: result[1]} as State))
-    );
+    // this.state$ = id$.pipe(
+    //   switchMap((id) =>
+    //     forkJoin(of(id), this.invoices.getEmployeeByInvoiceId({id: id}))
+    //   ),
+    //   map((result) => ({invoiceId: result[0], employee: result[1]} as State))
+    // );
 
     this.invoiceForm = this.builder.group({
       timeEntries: this.builder.array([
@@ -72,7 +71,7 @@ export class InvoiceComponent implements OnInit {
     this.invoices
       .submitInvoice({
         body: {
-          invoiceId: id,
+          vendorId: '',
           timeEntries: timeEntries
         }
       })

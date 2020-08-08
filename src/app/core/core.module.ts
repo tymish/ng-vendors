@@ -8,6 +8,7 @@ import { LoginComponent } from './auth/login.component';
 import { LoggedOutComponent } from './auth/logged-out.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     SidenavComponent,
     ToolbarComponent,
   ],
-  imports: [CommonModule, AppRoutingModule, MatModule],
+  imports: [CommonModule, AppRoutingModule, MatModule, HttpClientModule],
   exports: [SidenavComponent, ToolbarComponent],
 })
 export class CoreModule {}
