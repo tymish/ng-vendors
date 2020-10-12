@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatModule } from './mat.module';
 import { CoreModule } from './core/core.module';
-import { InvoiceComponent } from './invoices/invoice/invoice.component';
+import { SubmitInvoiceComponent } from './invoices/submit-invoice/submit-invoice.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { ApiModule } from './core/api/api.module';
@@ -20,7 +20,7 @@ import { LoginComponent } from './login/login.component';
     AppComponent,
     InvoicesComponent,
     HomeComponent,
-    InvoiceComponent,
+    SubmitInvoiceComponent,
     RegisterComponent,
     LoginComponent
   ],

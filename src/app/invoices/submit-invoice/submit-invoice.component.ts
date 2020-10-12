@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FormBuilder, FormGroup, FormArray} from '@angular/forms';
+import {FormBuilder, FormArray} from '@angular/forms';
 import {map} from 'rxjs/operators';
 import * as moment from 'moment';
 import {InvoicesService} from '../../core/api/services';
@@ -12,10 +12,10 @@ export interface State {
 
 @Component({
   selector: 'app-invoice',
-  templateUrl: './invoice.component.html',
-  styleUrls: ['./invoice.component.scss']
+  templateUrl: './submit-invoice.component.html',
+  styleUrls: ['./submit-invoice.component.scss']
 })
-export class InvoiceComponent implements OnInit {
+export class SubmitInvoiceComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private invoices: InvoicesService,
