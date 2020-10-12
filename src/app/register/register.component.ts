@@ -1,15 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { VendorsService } from '../core/api/services';
 import { ActivatedRoute } from '@angular/router';
+import { IFormGroup } from '@rxweb/types';
 import { Observable } from 'rxjs';
-import { Vendor } from '../core/api/models';
-import {
-  FormControl,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-} from '@angular/forms';
 import { tap } from 'rxjs/operators';
+import { Vendor } from '../core/api/models';
+import { RegisterForm, RegisterFormService } from './register.form.service';
+
 
 @Component({
   selector: 'app-register',
@@ -18,48 +15,35 @@ import { tap } from 'rxjs/operators';
 })
 export class RegisterComponent implements OnInit {
   private vendorId: string;
-  vendor$: Observable<Vendor>;
-
-  private passwordMismatch: ValidatorFn = (
-    control: FormGroup
-  ): ValidationErrors | null => {
-    const password = control.get('password');
-    const confirmPassword = control.get('confirmPassword');
-    return password &&
-      confirmPassword &&
-      password.value === confirmPassword.value
-      ? null
-      : { passwordMismatch: true };
-  };
-  vendorForm = new FormGroup({
-    email: new FormControl(),
-    mobilePhone: new FormControl(),
-    password: new FormControl(),
-    confirmPassword: new FormControl(),
-  }, {validators: [this.passwordMismatch] });
-  hide = true;
-
-  get mobilePhone() {
-    return this.vendorForm.get('mobilePhone');
-  }
-  get password() {
-    return this.vendorForm.get('password');
-  }
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly vendors: VendorsService
+    private readonly vendors: VendorsService,
+    private readonly formService: RegisterFormService
   ) {}
+
+  form: IFormGroup<RegisterForm>;
+  vendor$: Observable<Vendor>;
+  hide = true;
+
+  get mobilePhone() {
+    return this.form.controls.mobilePhone;
+  }
+
+  get password() {
+    return this.form.controls.password;
+  }
 
   ngOnInit(): void {
     this.vendorId = this.route.snapshot.params['id'];
+    this.form = this.formService.create();
     this.vendor$ = this.vendors
       .getVendor({ id: this.vendorId })
-      .pipe(tap((vendor) => this.vendorForm.patchValue(vendor)));
+      .pipe(tap((vendor) => this.form.patchValue(vendor)));
   }
 
   register() {
-    if (this.vendorForm.invalid) {
+    if (this.form.invalid) {
       alert('invalid');
       return;
     }

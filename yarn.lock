@@ -1037,6 +1037,13 @@
     rxjs "6.5.4"
     webpack-sources "1.4.3"
 
+"@rxweb/types@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@rxweb/types/-/types-1.0.6.tgz#e2c21f7e07407a2e8e89238de3ac9f4971bea2ae"
+  integrity sha512-VJTNsVecOub+Yg9qRdUCmX1U+9VTyvf7XzuH7hhoYrX/vM+0tmUjVbIGSAqlLAxYp3uCVcJC3tz8sPrQe3t74Q==
+  dependencies:
+    tslib "^1.9.0"
+
 "@schematics/angular@9.1.5":
   version "9.1.5"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-9.1.5.tgz#9d07997638194439b47d4bf3ba2b3fe4f7f1a630"
