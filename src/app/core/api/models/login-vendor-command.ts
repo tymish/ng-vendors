@@ -1,5 +1,5 @@
 /* tslint:disable */
-export interface LoginCommand {
+export interface LoginVendorCommand {
   email?: null | string;
   password?: null | string;
 }

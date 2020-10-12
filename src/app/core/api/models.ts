@@ -5,4 +5,4 @@ export { PayInvoiceCommand } from './models/pay-invoice-command';
 export { Vendor } from './models/vendor';
 export { AddVendorCommand } from './models/add-vendor-command';
 export { RegisterVendorCommand } from './models/register-vendor-command';
-export { LoginCommand } from './models/login-command';
+export { LoginVendorCommand } from './models/login-vendor-command';

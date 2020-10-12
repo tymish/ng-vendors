@@ -10,7 +10,7 @@ import { map, filter } from 'rxjs/operators';
 
 import { AddVendorCommand } from '../models/add-vendor-command';
 import { Invoice } from '../models/invoice';
-import { LoginCommand } from '../models/login-command';
+import { LoginVendorCommand } from '../models/login-vendor-command';
 import { RegisterVendorCommand } from '../models/register-vendor-command';
 import { Vendor } from '../models/vendor';
 
@@ -264,21 +264,21 @@ export class VendorsService extends BaseService {
   }
 
   /**
-   * Path part for operation login
+   * Path part for operation loginVendor
    */
-  static readonly LoginPath = '/vendors/login';
+  static readonly LoginVendorPath = '/vendors/login';
 
   /**
    * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `login()` instead.
+   * To access only the response body, use `loginVendor()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  login$Response(params?: {
-      body?: LoginCommand
+  loginVendor$Response(params?: {
+      body?: LoginVendorCommand
   }): Observable<StrictHttpResponse<void>> {
 
-    const rb = new RequestBuilder(this.rootUrl, VendorsService.LoginPath, 'post');
+    const rb = new RequestBuilder(this.rootUrl, VendorsService.LoginVendorPath, 'post');
     if (params) {
 
 
@@ -297,15 +297,15 @@ export class VendorsService extends BaseService {
 
   /**
    * This method provides access to only to the response body.
-   * To access the full response (for headers, for example), `login$Response()` instead.
+   * To access the full response (for headers, for example), `loginVendor$Response()` instead.
    *
    * This method sends `application/*+json` and handles request body of type `application/*+json`.
    */
-  login(params?: {
-      body?: LoginCommand
+  loginVendor(params?: {
+      body?: LoginVendorCommand
   }): Observable<void> {
 
-    return this.login$Response(params).pipe(
+    return this.loginVendor$Response(params).pipe(
       map((r: StrictHttpResponse<void>) => r.body as void)
     );
   }

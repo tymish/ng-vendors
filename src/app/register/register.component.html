@@ -1,7 +1,7 @@
 <form
   *ngIf="vendor$ | async as vendor"
   (ngSubmit)="register()"
-  [formGroup]="vendorForm"
+  [formGroup]="form"
 >
   <mat-form-field appearance="outline">
     <mat-label>Email</mat-label>
@@ -10,7 +10,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Mobile number</mat-label>
-    <input matInput formControlName="mobile" />
+    <input matInput formControlName="mobilePhone" />
   </mat-form-field>
 
   <mat-form-field appearance="outline">
