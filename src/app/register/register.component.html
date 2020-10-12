@@ -1,23 +1,25 @@
-<mat-form-field appearance="outline">
-    <mat-label>Email</mat-label>
-    <input matInput readonly value="john.doe@gmail.com"/>
-</mat-form-field>
-
-<mat-form-field appearance="outline">
-    <mat-label>Mobile number</mat-label>
-    <input matInput />
-</mat-form-field>
-
-<mat-form-field appearance="outline">
-    <mat-label>Password</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'">
-    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-</mat-form-field>
-
-<mat-form-field appearance="outline">
-    <mat-label>Confirm password</mat-label>
-    <input matInput [type]="hide ? 'password' : 'text'">
-    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-</mat-form-field>
-
-<button mat-raised-button color="primary">Register</button>
+<form *ngIf="vendor$ | async as vendor" (ngSubmit)="register()" [formGroup]="vendorForm">
+    <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput readonly formControlName="email"/>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+        <mat-label>Mobile number</mat-label>
+        <input matInput formControlName="mobile"/>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
+    
+    <mat-form-field appearance="outline">
+        <mat-label>Confirm password</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="confirmPassword">
+        <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </mat-form-field>
+    
+    <button mat-raised-button color="primary" type="submit">Register</button>
+</form>
