@@ -4,7 +4,6 @@ import { MatModule } from '../mat.module';
 import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from '../app-routing.module';
 
-import { LoginComponent } from './auth/login.component';
 import { LoggedOutComponent } from './auth/logged-out.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
@@ -12,7 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    LoginComponent,
     LoggedOutComponent,
     SidenavComponent,
     ToolbarComponent,
