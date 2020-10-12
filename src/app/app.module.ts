@@ -11,6 +11,8 @@ import { CoreModule } from './core/core.module';
 import { InvoiceComponent } from './invoices/invoice/invoice.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
+import { ApiModule } from './core/api/api.module';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { RegisterComponent } from './register/register.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     CoreModule,
-    MatModule
+    MatModule,
+    ApiModule.forRoot({rootUrl: environment.api})
   ],
   providers: [],
   bootstrap: [AppComponent]
