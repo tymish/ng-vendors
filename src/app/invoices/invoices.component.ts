@@ -10,6 +10,7 @@ export class InvoicesComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    // load the invoices for the vendor
   }
 
 }

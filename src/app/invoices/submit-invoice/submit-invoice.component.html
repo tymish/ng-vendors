@@ -1,0 +1,36 @@
+<h1>New Invoice</h1>
+<form [formGroup]="invoiceForm" (ngSubmit)="submitInvoice()">
+  <div
+    *ngFor="let entry of timeEntries.controls; let idx = index"
+    [formGroupName]="idx"
+    class="form-row"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date" />
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Start time</mat-label>
+      <input matInput formControlName="start" type="time" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>End time</mat-label>
+      <input matInput formControlName="end" type="time" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Comments</mat-label>
+      <input matInput formControlName="comments" />
+    </mat-form-field>
+
+    <button (click)="removeTimeEntry(idx)">Delete</button>
+  </div>
+
+  <button (click)="addTimeEntry()">Add</button>
+
+  <button type="submit">Submit</button>
+</form>

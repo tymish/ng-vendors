@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IFormGroup } from '@rxweb/types';
-import { LoginVendorCommand } from '../core/api/models/login-vendor-command';
 import { VendorsService } from '../core/api/services';
 
 interface LoginForm {
@@ -15,7 +15,9 @@ interface LoginForm {
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private readonly vendors: VendorsService) {}
+  constructor(
+    private readonly vendors: VendorsService,
+    private readonly router: Router) {}
 
   form: IFormGroup<LoginForm>;
 
@@ -32,6 +34,6 @@ export class LoginComponent implements OnInit {
         email: this.form.controls.email.value,
         password: this.form.controls.password.value,
       },
-    }).subscribe();
+    }).subscribe(_ => this.router.navigate(['invoices']));
   }
 }

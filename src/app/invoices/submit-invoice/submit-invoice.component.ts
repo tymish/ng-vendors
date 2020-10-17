@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {FormBuilder, FormArray} from '@angular/forms';
-import {map} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
+import { map } from 'rxjs/operators';
 import * as moment from 'moment';
-import {InvoicesService} from '../../core/api/services';
-import {TimeEntry} from '../../core/api/models';
+import { InvoicesService } from '../../core/api/services';
+import { TimeEntry } from '../../core/api/models';
 
 export interface State {
   invoiceId: string;
@@ -13,7 +13,7 @@ export interface State {
 @Component({
   selector: 'app-invoice',
   templateUrl: './submit-invoice.component.html',
-  styleUrls: ['./submit-invoice.component.scss']
+  styleUrls: ['./submit-invoice.component.scss'],
 })
 export class SubmitInvoiceComponent implements OnInit {
   constructor(
@@ -22,8 +22,47 @@ export class SubmitInvoiceComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
+  invoiceForm: FormGroup;
+
+  get timeEntries() {
+    return this.invoiceForm.get('timeEntries') as FormArray;
+  }
+
   ngOnInit(): void {
     const id$ = this.route.params.pipe(map((p) => p.id as string));
+
+    this.invoiceForm = this.builder.group({
+      timeEntries: this.builder.array([
+        this.builder.group({
+          date: this.builder.control(''),
+          start: this.builder.control(''),
+          end: this.builder.control(''),
+          comments: this.builder.control(''),
+        }),
+      ]),
+    });
+  }
+
+  addTimeEntry() {
+    this.timeEntries.push(
+      this.builder.group({
+        date: this.builder.control(''),
+        start: this.builder.control(''),
+        end: this.builder.control(''),
+        comments: this.builder.control(''),
+      })
+    );
+  }
+
+  removeTimeEntry(index: number) {
+    this.timeEntries.removeAt(index);
+  }
+
+  submitInvoice() {
+    const timeEntries = this.map(this.timeEntries);
+    this.invoices.submitInvoice({
+      body: { vendorId: '', timeEntries: timeEntries },
+    });
   }
 
   map(timeEntries: FormArray): TimeEntry[] {
@@ -33,7 +72,8 @@ export class SubmitInvoiceComponent implements OnInit {
       const end = `${dateString}T${entry.get('end').value}`;
       return {
         start: start,
-        end: end
+        end: end,
+        comments: entry.get('comments').value,
       } as TimeEntry;
     });
   }
