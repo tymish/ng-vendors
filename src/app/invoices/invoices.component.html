@@ -1,22 +1,16 @@
 <button routerLink="/invoices/submit">New Invoice</button>
 
-<table>
-    <tr>
-        <th>Submitted date</th>
-        <th>Hours</th>
-        <th>Invoice total</th>
-        <th></th>
-    </tr>
-    <tr>
-        <td>October 10, 2020</td>
-        <td>10</td>
-        <td>$250</td>
-        <td><button>View</button></td>
-    </tr>
-    <tr>
-        <td>November 10, 2020</td>
-        <td>8</td>
-        <td>$200</td>
-        <td><button>View</button></td>
-    </tr>
+<table *ngIf="invoices$ | async as invoices">
+  <tr>
+    <th>Submitted date</th>
+    <th>Hours</th>
+    <th>Invoice total</th>
+    <th></th>
+  </tr>
+  <tr *ngFor="let invoice of invoices">
+    <td>{{invoice.created | date: 'yyyy-MM-dd'}}</td>
+    <td>// TODO</td>
+    <td>${{invoice.totalAmount}}</td>
+    <td><button>View</button></td>
+  </tr>
 </table>
