@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { InvoiceComponent } from './invoices/invoice/invoice.component';
 import { InvoicesComponent } from './invoices/invoices.component';
 import { SubmitInvoiceComponent } from './invoices/submit-invoice/submit-invoice.component';
 import { LoginComponent } from './login/login.component';
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'invoices/submit',
     component: SubmitInvoiceComponent
+  },
+  {
+    path: 'invoices/:id',
+    component: InvoiceComponent
   }
 ];
 

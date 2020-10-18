@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { map, filter } from 'rxjs/operators';
 
 import { Invoice } from '../models/invoice';
+import { InvoiceDto } from '../models/invoice-dto';
 import { PayInvoiceCommand } from '../models/pay-invoice-command';
 import { SubmitInvoiceCommand } from '../models/submit-invoice-command';
 
@@ -37,7 +38,7 @@ export class InvoicesService extends BaseService {
   getInvoiceById$Response(params: {
     id: string;
 
-  }): Observable<StrictHttpResponse<Invoice>> {
+  }): Observable<StrictHttpResponse<InvoiceDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, InvoicesService.GetInvoiceByIdPath, 'get');
     if (params) {
@@ -51,7 +52,7 @@ export class InvoicesService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Invoice>;
+        return r as StrictHttpResponse<InvoiceDto>;
       })
     );
   }
@@ -65,10 +66,10 @@ export class InvoicesService extends BaseService {
   getInvoiceById(params: {
     id: string;
 
-  }): Observable<Invoice> {
+  }): Observable<InvoiceDto> {
 
     return this.getInvoiceById$Response(params).pipe(
-      map((r: StrictHttpResponse<Invoice>) => r.body as Invoice)
+      map((r: StrictHttpResponse<InvoiceDto>) => r.body as InvoiceDto)
     );
   }
 
