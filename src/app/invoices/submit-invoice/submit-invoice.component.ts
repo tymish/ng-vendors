@@ -56,15 +56,19 @@ export class SubmitInvoiceComponent implements OnInit {
   submitInvoice() {
     const timeEntries = this.map(this.timeEntries);
 
-    this.invoices.submitInvoice({
-      body: { vendorId: '014d9f31-6a28-4f5f-abfa-9f5ab04f93cc', timeEntries: timeEntries },
-    }).subscribe();
+    this.invoices
+      .submitInvoice({
+        body: {
+          vendorId: '014d9f31-6a28-4f5f-abfa-9f5ab04f93cc',
+          timeEntries: timeEntries,
+        },
+      })
+      .subscribe();
   }
 
   map(timeEntries: FormArray): TimeEntry[] {
     return timeEntries.controls.map((entry: FormGroup) => {
       const dateString = moment(entry.get('date').value).format('YYYY-MM-DD');
-      console.log(dateString);
       const start = `${dateString}T${entry.get('start').value}`;
       const end = `${dateString}T${entry.get('end').value}`;
       return {
