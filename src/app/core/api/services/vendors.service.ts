@@ -10,6 +10,7 @@ import { map, filter } from 'rxjs/operators';
 
 import { AddVendorCommand } from '../models/add-vendor-command';
 import { Invoice } from '../models/invoice';
+import { InvoiceDto } from '../models/invoice-dto';
 import { LoginVendorCommand } from '../models/login-vendor-command';
 import { RegisterVendorCommand } from '../models/register-vendor-command';
 import { Vendor } from '../models/vendor';
@@ -181,7 +182,7 @@ export class VendorsService extends BaseService {
   listVendorInvoices$Response(params: {
     id: string;
 
-  }): Observable<StrictHttpResponse<Array<Invoice>>> {
+  }): Observable<StrictHttpResponse<Array<InvoiceDto>>> {
 
     const rb = new RequestBuilder(this.rootUrl, VendorsService.ListVendorInvoicesPath, 'get');
     if (params) {
@@ -195,7 +196,7 @@ export class VendorsService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Array<Invoice>>;
+        return r as StrictHttpResponse<Array<InvoiceDto>>;
       })
     );
   }
@@ -209,10 +210,10 @@ export class VendorsService extends BaseService {
   listVendorInvoices(params: {
     id: string;
 
-  }): Observable<Array<Invoice>> {
+  }): Observable<Array<InvoiceDto>> {
 
     return this.listVendorInvoices$Response(params).pipe(
-      map((r: StrictHttpResponse<Array<Invoice>>) => r.body as Array<Invoice>)
+      map((r: StrictHttpResponse<Array<InvoiceDto>>) => r.body as Array<InvoiceDto>)
     );
   }
 

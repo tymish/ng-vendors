@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Invoice } from '../core/api/models';
+import { InvoiceDto } from '../core/api/models';
 import { VendorsService } from '../core/api/services';
 
 @Component({
@@ -11,7 +11,7 @@ import { VendorsService } from '../core/api/services';
 export class InvoicesComponent implements OnInit {
   constructor(private readonly vendors: VendorsService) {}
 
-  invoices$: Observable<Invoice[]>;
+  invoices$: Observable<InvoiceDto[]>;
 
   ngOnInit(): void {
     this.invoices$ = this.vendors.listVendorInvoices({
