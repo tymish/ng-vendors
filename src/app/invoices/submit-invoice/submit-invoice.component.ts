@@ -32,24 +32,19 @@ export class SubmitInvoiceComponent implements OnInit {
     const id$ = this.route.params.pipe(map((p) => p.id as string));
 
     this.invoiceForm = this.builder.group({
-      timeEntries: this.builder.array([
-        this.builder.group({
-          date: this.builder.control(''),
-          start: this.builder.control(''),
-          end: this.builder.control(''),
-          comments: this.builder.control(''),
-        }),
-      ]),
+      timeEntries: this.builder.array([]),
     });
+
+    this.addTimeEntry();
   }
 
   addTimeEntry() {
     this.timeEntries.push(
       this.builder.group({
-        date: this.builder.control(''),
-        start: this.builder.control(''),
-        end: this.builder.control(''),
-        comments: this.builder.control(''),
+        date: [''],
+        start: [''],
+        end: [''],
+        comments: [''],
       })
     );
   }
@@ -60,14 +55,16 @@ export class SubmitInvoiceComponent implements OnInit {
 
   submitInvoice() {
     const timeEntries = this.map(this.timeEntries);
+
     this.invoices.submitInvoice({
-      body: { vendorId: '', timeEntries: timeEntries },
-    });
+      body: { vendorId: '014d9f31-6a28-4f5f-abfa-9f5ab04f93cc', timeEntries: timeEntries },
+    }).subscribe();
   }
 
   map(timeEntries: FormArray): TimeEntry[] {
-    return timeEntries.controls.map((entry) => {
+    return timeEntries.controls.map((entry: FormGroup) => {
       const dateString = moment(entry.get('date').value).format('YYYY-MM-DD');
+      console.log(dateString);
       const start = `${dateString}T${entry.get('start').value}`;
       const end = `${dateString}T${entry.get('end').value}`;
       return {
