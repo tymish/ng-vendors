@@ -277,7 +277,7 @@ export class VendorsService extends BaseService {
    */
   loginVendor$Response(params?: {
       body?: LoginVendorCommand
-  }): Observable<StrictHttpResponse<void>> {
+  }): Observable<StrictHttpResponse<string>> {
 
     const rb = new RequestBuilder(this.rootUrl, VendorsService.LoginVendorPath, 'post');
     if (params) {
@@ -286,12 +286,12 @@ export class VendorsService extends BaseService {
       rb.body(params.body, 'application/*+json');
     }
     return this.http.request(rb.build({
-      responseType: 'text',
-      accept: '*/*'
+      responseType: 'json',
+      accept: 'application/json'
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return (r as HttpResponse<any>).clone({ body: undefined }) as StrictHttpResponse<void>;
+        return r as StrictHttpResponse<string>;
       })
     );
   }
@@ -304,10 +304,10 @@ export class VendorsService extends BaseService {
    */
   loginVendor(params?: {
       body?: LoginVendorCommand
-  }): Observable<void> {
+  }): Observable<string> {
 
     return this.loginVendor$Response(params).pipe(
-      map((r: StrictHttpResponse<void>) => r.body as void)
+      map((r: StrictHttpResponse<string>) => r.body as string)
     );
   }
 

@@ -1,123 +1,65 @@
 import { Injectable } from '@angular/core';
-import createAuth0Client, {
-  GetTokenSilentlyOptions,
-  GetUserOptions,
-  getIdTokenClaimsOptions,
-} from '@auth0/auth0-spa-js';
-import Auth0Client from '@auth0/auth0-spa-js/dist/typings/Auth0Client';
-import {
-  from,
-  of,
-  Observable,
-  BehaviorSubject,
-  combineLatest,
-  throwError,
-} from 'rxjs';
-import { tap, catchError, concatMap, shareReplay, map } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { Auth0JsService } from './auth0-js.service';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { VendorsService } from '../api/services';
+import jwt_decode from 'jwt-decode';
+
+interface JwtPayload {
+  sub: string;
+  email: string;
+  nbf: number;
+  exp: number;
+  iat: number;
+  iss: string;
+  aud: string;
+}
+
+interface User {
+  vendorId: string;
+  email: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  auth0Client$ = (from(
-    createAuth0Client({
-      domain: environment.auth.domain,
-      client_id: environment.auth.client_id,
-      redirect_uri: `${window.location.origin}`,
-    })
-  ) as Observable<Auth0Client>).pipe(
-    shareReplay(1),
-    catchError((err) => throwError(err))
+  private jwtPayloadSubject$ = new BehaviorSubject<JwtPayload>(null);
+
+  constructor(private readonly vendors: VendorsService) {}
+
+  loggedIn = false;
+
+  /** Use for http requests only */
+  token$ = this.jwtPayloadSubject$.asObservable();
+
+  /** User that is logged in */
+  user$: Observable<User> = this.jwtPayloadSubject$.pipe(
+    map((payload) => ({ email: payload.email, vendorId: payload.sub } as User))
   );
 
-  isAuthenticated$ = this.auth0Client$.pipe(
-    concatMap((client: Auth0Client) => from(client.isAuthenticated())),
-    tap((res) => (this.loggedIn = res))
-  );
-
-  handleRedirectCallback$ = this.auth0Client$.pipe(
-    concatMap((client: Auth0Client) => from(client.handleRedirectCallback()))
-  );
-
-  private userProfileSubject$ = new BehaviorSubject<any>(null);
-  userProfile$ = this.userProfileSubject$.asObservable();
-
-  loggedIn: boolean = null;
-
-  constructor(private router: Router) {
-    this.localAuthSetup();
-    this.handleAuthCallback();
-  }
-
-  getUser$(options?: GetUserOptions): Observable<any> {
-    return this.auth0Client$.pipe(
-      concatMap((client: Auth0Client) => from(client.getUser(options))),
-      tap((user) => this.userProfileSubject$.next(user))
+  loggedIn$(): Observable<boolean> {
+    return this.jwtPayloadSubject$.pipe(
+      map((payload) => payload && payload.exp && payload.exp < Date.now())
     );
   }
 
-  getAuthToken$(options?: GetTokenSilentlyOptions): Observable<any> {
-    return this.auth0Client$.pipe(
-      concatMap((client: Auth0Client) => from(client.getTokenSilently(options)))
-    );
+  refreshToken() {
+    // Send post request to server with current JWT
+    // Update behavior subject with refreshed JWT
   }
 
-  getIdTokenClaims$(options?: getIdTokenClaimsOptions): Observable<any> {
-    return this.auth0Client$.pipe(
-      concatMap((client: Auth0Client) => from(client.getIdTokenClaims(options)))
-    );
-  }
-
-  private localAuthSetup() {
-    const checkAuth$ = this.isAuthenticated$.pipe(
-      concatMap((loggedIn: boolean) => {
-        if (loggedIn) {
-          return this.getUser$();
-        }
-        return of(loggedIn);
-      })
-    );
-    checkAuth$.subscribe();
-  }
-
-  login(redirectPath: string = '/') {
-    this.auth0Client$.subscribe((client: Auth0Client) => {
-      client.loginWithRedirect({
-        redirect_uri: `${window.location.origin}`,
-        appState: { target: redirectPath },
-      });
-    });
-  }
-
-  private handleAuthCallback() {
-    const params = window.location.search;
-    if (params.includes('code=') && params.includes('state=')) {
-      let targetRoute: string;
-      const authComplete$ = this.handleRedirectCallback$.pipe(
-        tap((cbRes) => {
-          targetRoute =
-            cbRes.appState && cbRes.appState.target
-              ? cbRes.appState.target
-              : '/';
-        }),
-        concatMap(() => {
-          return combineLatest([this.getUser$(), this.isAuthenticated$]);
+  login$(email: string, password: string) {
+    return this.vendors
+      .loginVendor({ body: { email: email, password: password } })
+      .pipe(
+        tap((jwt) => {
+          const payload = jwt_decode(jwt) as JwtPayload;
+          this.jwtPayloadSubject$.next(payload);
+          this.loggedIn = true;
         })
       );
-
-      authComplete$.subscribe(([user, loggedIn]) => {
-        this.router.navigate([targetRoute]);
-      });
-    }
   }
 
   logout() {
-    this.auth0Client$.subscribe((client: Auth0Client) => {
-      client.logout({
-        client_id: environment.auth.client_id,
-        returnTo: `${window.location.origin}`,
-      });
-    });
+    this.jwtPayloadSubject$.next(null);
+    this.loggedIn = false;
   }
 }

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IFormGroup } from '@rxweb/types';
-import { VendorsService } from '../core/api/services';
+import { AuthService } from '../core/auth/auth.service';
 
 interface LoginForm {
   email: string;
@@ -16,8 +16,9 @@ interface LoginForm {
 })
 export class LoginComponent implements OnInit {
   constructor(
-    private readonly vendors: VendorsService,
-    private readonly router: Router) {}
+    private readonly auth: AuthService,
+    private readonly router: Router
+  ) {}
 
   form: IFormGroup<LoginForm>;
 
@@ -29,11 +30,9 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.vendors.loginVendor({
-      body: {
-        email: this.form.controls.email.value,
-        password: this.form.controls.password.value,
-      },
-    }).subscribe(_ => this.router.navigate(['invoices']));
+    this.auth.login$(
+      this.form.controls.email.value,
+      this.form.controls.password.value
+    ).subscribe(() => this.router.navigate(['invoices']));
   }
 }
