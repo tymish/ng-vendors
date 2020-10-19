@@ -3,6 +3,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { VendorsService } from '../api/services';
 import jwt_decode from 'jwt-decode';
+import { Router } from '@angular/router';
 
 interface JwtPayload {
   sub: string;
@@ -23,7 +24,15 @@ interface User {
 export class AuthService {
   private jwtPayloadSubject$ = new BehaviorSubject<JwtPayload>(null);
 
-  constructor(private readonly vendors: VendorsService) {}
+  constructor(
+    private readonly vendors: VendorsService,
+    private readonly router: Router) {
+      const jwt = this.readSessionToken();
+      if (jwt) {
+        this.jwtPayloadSubject$.next(jwt_decode(jwt) as JwtPayload);
+        this.loggedIn = true;
+      }
+  }
 
   loggedIn = false;
 
@@ -54,6 +63,7 @@ export class AuthService {
           const payload = jwt_decode(jwt) as JwtPayload;
           this.jwtPayloadSubject$.next(payload);
           this.loggedIn = true;
+          this.saveSessionToken(jwt);
         })
       );
   }
@@ -61,5 +71,19 @@ export class AuthService {
   logout() {
     this.jwtPayloadSubject$.next(null);
     this.loggedIn = false;
+    this.deleteSessionToken();
+    this.router.navigate(['/login']);
+  }
+
+  readSessionToken() {
+    return sessionStorage.getItem('auth-token');
+  }
+
+  saveSessionToken(jwt: string) {
+    sessionStorage.setItem('auth-token', jwt);
+  }
+
+  deleteSessionToken() {
+    sessionStorage.removeItem('auth-token');
   }
 }
