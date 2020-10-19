@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
-import { map } from 'rxjs/operators';
+import { concatMap, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { InvoicesService } from '../../core/api/services';
 import { TimeEntry } from '../../core/api/models';
+import { AuthService } from 'src/app/core/auth/auth.service';
 
 export interface State {
   invoiceId: string;
@@ -19,6 +20,7 @@ export class SubmitInvoiceComponent implements OnInit {
   constructor(
     private builder: FormBuilder,
     private invoices: InvoicesService,
+    private auth: AuthService,
     private route: ActivatedRoute
   ) {}
 
@@ -55,14 +57,17 @@ export class SubmitInvoiceComponent implements OnInit {
 
   submitInvoice() {
     const timeEntries = this.map(this.timeEntries);
-
-    this.invoices
-      .submitInvoice({
-        body: {
-          vendorId: '014d9f31-6a28-4f5f-abfa-9f5ab04f93cc',
-          timeEntries: timeEntries,
-        },
-      })
+    this.auth.user$
+      .pipe(
+        concatMap((user) =>
+          this.invoices.submitInvoice({
+            body: {
+              vendorId: user.vendorId,
+              timeEntries: timeEntries,
+            },
+          })
+        )
+      )
       .subscribe();
   }
 
