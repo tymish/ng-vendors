@@ -1,13 +1,20 @@
+<h1 class="text-center">Tymish Login</h1>
+
 <form [formGroup]="form" (ngSubmit)="login()">
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Email</mat-label>
-    <input matInput formControlName="email" />
+    <input matInput formControlName="email" id="email" />
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
-    <mat-label>password</mat-label>
-    <input matInput formControlName="password" type="password"/>
+  <mat-form-field appearance="outline" class="form-field">
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      formControlName="password"
+      type="password"
+      id="password"
+    />
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Login</button>
+  <button mat-raised-button class="form-button" color="primary" type="submit">Login</button>
 </form>
