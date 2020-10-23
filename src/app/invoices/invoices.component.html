@@ -1,16 +1,31 @@
-<button routerLink="/invoices/submit">New Invoice</button>
+<div class="py-2">
+  <button mat-raised-button class="form-button" color="primary" routerLink="/invoices/submit">
+    New Invoice
+  </button>
+</div>
 
-<table *ngIf="invoices$ | async as invoices">
-  <tr>
-    <th>Submitted date</th>
-    <th>Hours</th>
-    <th>Invoice total</th>
-    <th></th>
-  </tr>
-  <tr *ngFor="let invoice of invoices">
-    <td>{{invoice.created | date: 'yyyy-MM-dd'}}</td>
-    <td>{{invoice.totalHours}}</td>
-    <td>${{invoice.totalAmount}}</td>
-    <td><button [routerLink]="['/invoices', invoice.id]">View</button></td>
-  </tr>
-</table>
+<mat-list *ngIf="invoices$ | async as invoices; else noInvoices" class="list-center">
+  <h2 class="text-center">Invoices</h2>
+  <mat-list-item *ngFor="let invoice of invoices">
+    <span class="date">
+      {{ invoice.created | date: "MMM dd" }}
+    </span>
+    <span class="detail">
+      [${{ invoice.totalAmount }}] - {{ invoice.totalHours }}
+      {{ invoice.totalHours > 1 ? "Hours" : "Hour" }}
+    </span>
+    <button
+      mat-stroked-button
+      [routerLink]="['/invoices', invoice.id]"
+    >
+      View
+    </button>
+  </mat-list-item>
+</mat-list>
+
+
+<ng-template #noInvoices>
+  <p class="text-center">
+    It looks like you don't have any invoices yet! 😲
+  </p>
+</ng-template>
