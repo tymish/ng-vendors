@@ -1,36 +1,39 @@
-<h1>New Invoice</h1>
+<h1 class="text-center">New Invoice</h1>
 <form [formGroup]="invoiceForm" (ngSubmit)="submitInvoice()">
   <div formArrayName="timeEntries">
     <div
       *ngFor="let entry of timeEntries.controls; let idx = index"
       [formGroupName]="idx"
     >
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>Date</mat-label>
         <input matInput [matDatepicker]="picker" formControlName="date" />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>Start time</mat-label>
         <input matInput formControlName="start" type="time" />
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>End time</mat-label>
         <input matInput formControlName="end" type="time" />
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
+      <mat-form-field appearance="outline" class="form-field">
         <mat-label>Comments</mat-label>
         <input matInput formControlName="comments" />
       </mat-form-field>
 
-      <button (click)="removeTimeEntry(idx)">Delete</button>
-    </div>
+      <button mat-icon-button (click)="removeTimeEntry(idx)" aria-label="Delete Row">
+        <mat-icon>delete</mat-icon>
+      </button>
 
-    <button (click)="addTimeEntry()">Add</button>
+    </div>
+    <button mat-stroked-button (click)="addTimeEntry()">Add a row</button>
+
   </div>
-  <button type="submit">Submit</button>
+  <button mat-raised-button class="form-button" color="primary" type="submit">Submit</button>
 </form>
