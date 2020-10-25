@@ -1,5 +1,5 @@
 <h1 class="text-center">New Invoice</h1>
-<form [formGroup]="invoiceForm" (ngSubmit)="submitInvoice()">
+<form [formGroup]="invoiceForm" (ngSubmit)="submitInvoice()" class="mx-auto">
   <div formArrayName="timeEntries">
     <div
       *ngFor="let entry of timeEntries.controls; let idx = index"
@@ -12,12 +12,12 @@
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="form-field">
+      <mat-form-field appearance="outline" class="form-field time">
         <mat-label>Start time</mat-label>
-        <input matInput formControlName="start" type="time" />
+        <input matInput formControlName="start" type="time"/>
       </mat-form-field>
 
-      <mat-form-field appearance="outline" class="form-field">
+      <mat-form-field appearance="outline" class="form-field time">
         <mat-label>End time</mat-label>
         <input matInput formControlName="end" type="time" />
       </mat-form-field>
