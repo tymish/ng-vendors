@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { VendorsService } from '../core/api/services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IFormGroup } from '@rxweb/types';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { Vendor } from '../core/api/models';
 import { RegisterForm, RegisterFormService } from './register.form.service';
+import { AuthService } from '../core/auth/auth.service';
 
 
 @Component({
@@ -19,12 +20,18 @@ export class RegisterComponent implements OnInit {
   constructor(
     private readonly route: ActivatedRoute,
     private readonly vendors: VendorsService,
-    private readonly formService: RegisterFormService
+    private readonly formService: RegisterFormService,
+    private readonly auth: AuthService,
+    private readonly router: Router
   ) {}
 
   form: IFormGroup<RegisterForm>;
   vendor$: Observable<Vendor>;
   hide = true;
+
+  get email() {
+    return this.form.controls.email;
+  }
 
   get mobilePhone() {
     return this.form.controls.mobilePhone;
@@ -56,6 +63,7 @@ export class RegisterComponent implements OnInit {
           password: this.password.value,
         },
       })
-      .subscribe();
+      .pipe(switchMap(() => this.auth.login$(this.email.value, this.password.value)))
+      .subscribe(() => this.router.navigate(['/']));
   }
 }
