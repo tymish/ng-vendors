@@ -46,7 +46,14 @@ export class RegisterComponent implements OnInit {
     this.form = this.formService.create();
     this.vendor$ = this.vendors
       .getVendor({ id: this.vendorId })
-      .pipe(tap((vendor) => this.form.patchValue(vendor)));
+      .pipe(
+        tap(vendor => {
+          if (!!vendor.registered) {
+            alert('User has already been registered, please login')
+            this.router.navigate(['login'])
+          }
+        }),
+        tap((vendor) => this.form.patchValue(vendor)));
   }
 
   register() {
@@ -64,6 +71,6 @@ export class RegisterComponent implements OnInit {
         },
       })
       .pipe(switchMap(() => this.auth.login$(this.email.value, this.password.value)))
-      .subscribe(() => this.router.navigate(['/']));
+      .subscribe(() => this.router.navigate(['invoices']));
   }
 }
