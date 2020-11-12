@@ -1,21 +1,21 @@
-<h1>Register your account here</h1>
+<h1 class="text-center">Register your account here</h1>
 
 <form
   *ngIf="vendor$ | async as vendor"
   (ngSubmit)="register()"
   [formGroup]="form"
 >
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Email</mat-label>
     <input matInput readonly formControlName="email" />
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Mobile number</mat-label>
     <input matInput formControlName="mobilePhone" />
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Password</mat-label>
     <input
       matInput
@@ -27,7 +27,7 @@
     }}</mat-icon>
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="form-field">
     <mat-label>Confirm password</mat-label>
     <input
       matInput
@@ -39,5 +39,5 @@
     }}</mat-icon>
   </mat-form-field>
 
-  <button mat-raised-button color="primary" type="submit">Register</button>
+  <button mat-raised-button color="primary" type="submit" class="form-button">Register</button>
 </form>
