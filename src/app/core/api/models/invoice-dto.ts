@@ -1,5 +1,6 @@
 /* tslint:disable */
 import { TimeEntryDto } from './time-entry-dto';
+import { VendorDto } from './vendor-dto';
 export interface InvoiceDto {
   created?: string;
   id?: string;
@@ -10,5 +11,6 @@ export interface InvoiceDto {
   timeEntryDtos?: null | Array<TimeEntryDto>;
   totalAmount?: number;
   totalHours?: number;
+  vendorDto?: null | VendorDto;
   vendorId?: string;
 }

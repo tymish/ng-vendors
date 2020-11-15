@@ -5,6 +5,7 @@ import { InvoiceComponent } from './invoices/invoice/invoice.component';
 import { InvoicesComponent } from './invoices/invoices.component';
 import { SubmitInvoiceComponent } from './invoices/submit-invoice/submit-invoice.component';
 import { LoginComponent } from './login/login.component';
+import { MyAccountComponent } from './my-account/my-account.component';
 import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
@@ -34,6 +35,11 @@ const routes: Routes = [
   {
     path: 'invoices/:id',
     component: InvoiceComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'account',
+    component: MyAccountComponent,
     canActivate: [AuthGuard]
   }
 ];

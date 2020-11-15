@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { InvoicesService } from './services/invoices.service';
+import { StudiosService } from './services/studios.service';
 import { VendorsService } from './services/vendors.service';
 
 /**
@@ -15,6 +16,7 @@ import { VendorsService } from './services/vendors.service';
   declarations: [],
   providers: [
     InvoicesService,
+    StudiosService,
     VendorsService,
     ApiConfiguration
   ],

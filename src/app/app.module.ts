@@ -15,6 +15,7 @@ import { ApiModule } from './core/api/api.module';
 import { environment } from 'src/environments/environment';
 import { LoginComponent } from './login/login.component';
 import { InvoiceComponent } from './invoices/invoice/invoice.component';
+import { MyAccountComponent } from './my-account/my-account.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { InvoiceComponent } from './invoices/invoice/invoice.component';
     SubmitInvoiceComponent,
     RegisterComponent,
     LoginComponent,
-    InvoiceComponent
+    InvoiceComponent,
+    MyAccountComponent
   ],
   imports: [
     BrowserModule,

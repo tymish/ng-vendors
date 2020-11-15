@@ -14,6 +14,7 @@ import { InvoiceDto } from '../models/invoice-dto';
 import { LoginVendorCommand } from '../models/login-vendor-command';
 import { RegisterVendorCommand } from '../models/register-vendor-command';
 import { Vendor } from '../models/vendor';
+import { VendorDto } from '../models/vendor-dto';
 
 @Injectable({
   providedIn: 'root',
@@ -40,7 +41,7 @@ export class VendorsService extends BaseService {
   getVendor$Response(params: {
     id: string;
 
-  }): Observable<StrictHttpResponse<Vendor>> {
+  }): Observable<StrictHttpResponse<VendorDto>> {
 
     const rb = new RequestBuilder(this.rootUrl, VendorsService.GetVendorPath, 'get');
     if (params) {
@@ -54,7 +55,7 @@ export class VendorsService extends BaseService {
     })).pipe(
       filter((r: any) => r instanceof HttpResponse),
       map((r: HttpResponse<any>) => {
-        return r as StrictHttpResponse<Vendor>;
+        return r as StrictHttpResponse<VendorDto>;
       })
     );
   }
@@ -68,10 +69,10 @@ export class VendorsService extends BaseService {
   getVendor(params: {
     id: string;
 
-  }): Observable<Vendor> {
+  }): Observable<VendorDto> {
 
     return this.getVendor$Response(params).pipe(
-      map((r: StrictHttpResponse<Vendor>) => r.body as Vendor)
+      map((r: StrictHttpResponse<VendorDto>) => r.body as VendorDto)
     );
   }
 
