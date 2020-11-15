@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormArray, FormGroup } from '@angular/forms';
 import { concatMap, map } from 'rxjs/operators';
 import * as moment from 'moment';
@@ -21,7 +21,8 @@ export class SubmitInvoiceComponent implements OnInit {
     private builder: FormBuilder,
     private invoices: InvoicesService,
     private auth: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   invoiceForm: FormGroup;
@@ -68,7 +69,7 @@ export class SubmitInvoiceComponent implements OnInit {
           })
         )
       )
-      .subscribe();
+      .subscribe(() => this.router.navigate(['invoices']));
   }
 
   map(timeEntries: FormArray): TimeEntry[] {
