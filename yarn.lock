@@ -132,10 +132,12 @@
   dependencies:
     tslib "^2.0.0"
 
-"@angular/cdk@^9.2.3":
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-9.2.3.tgz#e0f7d4eaeca429346e15bd258966fbb5a5f4ed0b"
-  integrity sha512-tQr/yt8GNGsZ/DTT+PMq7XdRmL56hwVCyf8F12JQAawutSLfTfMb+S1lpN7L/0Pb/L5JBuCfG2HmXK7vHo02gw==
+"@angular/cdk@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-11.0.0.tgz#7ec0fc8b5051c54f4a3910e61f1ee7d30796c2d2"
+  integrity sha512-kfgEE/LDYMZB4NICChzWn/nTEeoZ3wxrYsDDcy2Qj+57zUmJcxBLL1h+tawYCy3a1g7ypDLYX7yrbPEBE7/EXQ==
+  dependencies:
+    tslib "^2.0.0"
   optionalDependencies:
     parse5 "^5.0.0"
 
@@ -224,15 +226,19 @@
   dependencies:
     tslib "^2.0.0"
 
-"@angular/material-moment-adapter@^9.2.3":
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/material-moment-adapter/-/material-moment-adapter-9.2.3.tgz#7c18bdc57009d7a675fa9f504fc24e315a0e1504"
-  integrity sha512-+B+njuV0rr2GKOglgXlFzgT6Pq7VMsPsMHhTkJWeRe96RVEIuT6pMehlHJAEQgaFi+LRjH1MIHLH2jcc0myDvg==
+"@angular/material-moment-adapter@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/material-moment-adapter/-/material-moment-adapter-11.0.0.tgz#34dd4b590c09f820dd6626eea43050d243a8026c"
+  integrity sha512-58Hj3gCuRFW8y+lcHOj3y3VDI29fKL8PSj2LG3sPvoS1GwCJiJJzkAAq131bPo64Eb0bJFQcKBgMx5dHUnvwwQ==
+  dependencies:
+    tslib "^2.0.0"
 
-"@angular/material@^9.2.3":
-  version "9.2.3"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-9.2.3.tgz#86d6239fd497ee4c4b75002401824481539bcab9"
-  integrity sha512-QJltLNp8a/eoozPgkFLISEWgdlX9q9+fZaLJ8c9tHEp2IT5sFYBFHf8dPl0pUyxgOXkS/0HD43I1qki71/T7Kw==
+"@angular/material@^11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-11.0.0.tgz#6ef7048763e7415dabda54d32847b2821bf6413d"
+  integrity sha512-pTwYmBrRXbEzF5J/oayZF0ApA0tLN+CUl/2MaYFNLzvE/Kn6hIdDb7TonWAEBgeSHIzqzyTV8IUQuXwGaPds9A==
+  dependencies:
+    tslib "^2.0.0"
 
 "@angular/platform-browser-dynamic@~11.0.0":
   version "11.0.0"
