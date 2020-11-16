@@ -1,4 +1,43 @@
-
 <div *ngIf="invoice$ | async as invoice">
-    <pre>{{invoice | json}}</pre>
+  <div style="display: inline;">
+      <h1 style="display: inline-block;">Invoice</h1>&nbsp;&nbsp;
+      <mat-chip-list style="display: inline-block;">
+        <mat-chip color="primary" selected *ngIf="!invoice.paid">Pending payment</mat-chip>
+      </mat-chip-list>
+  </div>
+
+  
+  <p>Submitted: {{ invoice.submitted | date: "yyyy-mm-dd" }}</p>
+  <p>Total Hours: {{ invoice.totalHours }}</p>
+  <p>Total Amount: {{ invoice.totalAmount }}</p>
+
+  <table mat-table [dataSource]="timeEntries(invoice)">
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef>Date</th>
+      <td mat-cell *matCellDef="let row">{{ row.date }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="hours">
+      <th mat-header-cell *matHeaderCellDef>Hours</th>
+      <td mat-cell *matCellDef="let row">{{ row.hours }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="time">
+      <th mat-header-cell *matHeaderCellDef>Time</th>
+      <td mat-cell *matCellDef="let row">{{ row.time }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="comments">
+      <th mat-header-cell *matHeaderCellDef>Comments</th>
+      <td mat-cell *matCellDef="let row">{{ row.comments }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef>Amount</th>
+      <td mat-cell *matCellDef="let row">{{ row.amount }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
 </div>
