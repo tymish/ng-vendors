@@ -1,0 +1,16 @@
+name: Integration Build & Deploy
+
+on:
+
+jobs:
+
+  build:
+    name: Build artifacts
+    runs-on: ubuntu-latest
+    steps:
+
+    - uses: actions/checkout@v2
+    - name: ng build
+      run: |
+
+  
