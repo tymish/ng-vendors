@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DatePickerComponent } from './date-picker/date-picker.component';
 import { TimePickerComponent } from './time-picker/time-picker.component';
 import { AddTimeEntryComponent } from './add-time-entry.component';
+import { MatModule } from '../mat.module';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
   declarations: [AddTimeEntryComponent, DatePickerComponent, TimePickerComponent],
   imports: [
     CommonModule,
+    MatModule,
     RouterModule.forChild(routes)
   ]
 })
