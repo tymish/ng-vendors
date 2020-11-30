@@ -16,6 +16,7 @@ import { environment } from 'src/environments/environment';
 import { LoginComponent } from './login/login.component';
 import { InvoiceComponent } from './invoices/invoice/invoice.component';
 import { MyAccountComponent } from './my-account/my-account.component';
+import { TimeEntriesComponent } from './time-entries/time-entries.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MyAccountComponent } from './my-account/my-account.component';
     RegisterComponent,
     LoginComponent,
     InvoiceComponent,
-    MyAccountComponent
+    MyAccountComponent,
+    TimeEntriesComponent
   ],
   imports: [
     BrowserModule,

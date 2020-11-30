@@ -25,4 +25,8 @@ export class SidenavComponent implements OnInit {
   toggle() {
     this.sidenav.toggle();
   }
+
+  close() {
+    this.sidenav.mode === 'over' && this.sidenav.close()
+  }
 }

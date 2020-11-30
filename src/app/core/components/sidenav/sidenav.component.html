@@ -8,16 +8,22 @@
       *ngIf="this.auth.loggedIn"
     >
       <mat-nav-list>
+        <a 
+          mat-list-item
+          routerLink="/"
+          (click)="close()"
+          >Time Entries</a
+        >
         <a
           mat-list-item
           routerLink="invoices"
-          (click)="sidenav.mode === 'over' && sidenav.close()"
+          (click)="close()"
           >Invoices</a
         >
         <a
           mat-list-item
           routerLink="account"
-          (click)="sidenav.mode === 'over' && sidenav.close()"
+          (click)="close()"
           >My Account</a
         >
       </mat-nav-list>
