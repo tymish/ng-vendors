@@ -9,7 +9,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatIconModule} from '@angular/material/icon';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatInputModule} from '@angular/material/input';
-import {MatCalendar, MatDatepickerModule} from '@angular/material/datepicker';
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatTableModule} from '@angular/material/table';
@@ -19,6 +19,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet'; 
+import { NgbTimepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 const angularMaterial = [
   MatButtonModule,
@@ -40,11 +42,16 @@ const angularMaterial = [
   MatSelectModule,
   MatMenuModule,
   MatSnackBarModule,
-  MatRadioModule
+  MatRadioModule,
+  MatBottomSheetModule
 ];
 
+const ngBootstrap = [
+  NgbTimepickerModule
+]
+
 @NgModule({
-  imports: [angularMaterial],
-  exports: [angularMaterial]
+  imports: [...angularMaterial, ...ngBootstrap],
+  exports: [...angularMaterial, ...ngBootstrap]
 })
 export class MatModule {}
