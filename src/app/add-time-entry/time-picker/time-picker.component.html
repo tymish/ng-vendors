@@ -1,7 +1,12 @@
-<h1>January 2020</h1>
-<p>
-    13 22 23 24
-</p>
+<h1>{{monthRange}} 2020</h1>
+<div class="d-flex">
+    <span *ngFor="let date of selectedDates" class="selected-date">
+        {{date.date()}}
+    </span>
+</div>
+
+<p>{{selectedDates.length || 'No'}} dates selected</p>
+
 <form>
     <div class="form-field">
         <label>From</label>

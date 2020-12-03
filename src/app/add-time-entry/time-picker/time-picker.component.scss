@@ -1,9 +1,29 @@
 :host {
-    display: block;
-    height: 450px;
+  display: block;
+  height: 450px;
 }
 
 .form-field label {
-    font-size: 1.1em;
-    font-weight: bold;
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+.selected-date {
+  display: flex;
+  border-radius: 100%;
+
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  padding: .5em 1em;
+
+  width: 42px;
+  height: 42px;
+  background-color: blue;
+  color: white;
 }

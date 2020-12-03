@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { Moment } from 'moment';
 
 export interface Time {
   hour: number;
   minute: number;
   second: number;
+}
+
+export interface Data {
+  selectedDates: Moment[];
 }
 
 @Component({
@@ -12,11 +18,26 @@ export interface Time {
   styleUrls: ['./time-picker.component.scss']
 })
 export class TimePickerComponent implements OnInit {
+
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: Data) { }
   from: Time;
   to: Time;
-  constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  get selectedDates() {
+    return this.data.selectedDates;
   }
 
+  get monthRange(): string {
+    const dates = this.selectedDates;
+    if (!this.selectedDates || this.selectedDates.length === 0) return '';
+
+    const last = dates[0].format('MMMM');
+
+    const first = dates[this.selectedDates.length - 1].format('MMMM');
+    if (first === last) return last;
+
+    return `${last} - ${first}`;
+  }
 }

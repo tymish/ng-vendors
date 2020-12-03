@@ -6,25 +6,22 @@ import { TimePickerComponent } from './time-picker/time-picker.component';
 @Component({
   selector: 'app-add-time-entry',
   templateUrl: './add-time-entry.component.html',
-  styleUrls: ['./add-time-entry.component.scss']
+  styleUrls: ['./add-time-entry.component.scss'],
 })
 export class AddTimeEntryComponent implements OnInit {
   selectedDates: Moment[] = [];
 
-  constructor(private bottomSheet: MatBottomSheet) { }
+  constructor(private bottomSheet: MatBottomSheet) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   updateDates(selectedDates: Moment[]) {
-    this.selectedDates = selectedDates;
-    console.log(selectedDates);
+    this.selectedDates = selectedDates.sort((a,b) => a.valueOf() - b.valueOf());
   }
 
   openTimePicker() {
-    const ref = this.bottomSheet.open(TimePickerComponent);
-    ref.afterDismissed().subscribe(() => {
-      console.log(ref.instance.to);
-    })
+    const ref = this.bottomSheet.open(TimePickerComponent, {
+      data: { selectedDates: this.selectedDates },
+    });
   }
 }
