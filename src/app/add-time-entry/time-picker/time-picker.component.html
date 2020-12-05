@@ -1,11 +1,16 @@
-<h1>{{monthRange}} 2020</h1>
+<h1>
+    <span *ngIf="monthRange && year">
+        {{monthRange}} {{year}}
+    </span>
+    <span>
+        No dates selected
+    </span>
+</h1>
 <div class="d-flex">
     <span *ngFor="let date of selectedDates" class="selected-date">
         {{date.date()}}
     </span>
 </div>
-
-<p>{{selectedDates.length || 'No'}} dates selected</p>
 
 <form>
     <div class="form-field">
@@ -17,5 +22,7 @@
         <label>To</label>
         <ngb-timepicker [(ngModel)]="to" name="to" [meridian]="true" [minuteStep]="15"></ngb-timepicker>
     </div>
+
+    <button mat-raised-button type="button">Save</button>
 </form>
 

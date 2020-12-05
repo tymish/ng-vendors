@@ -29,13 +29,17 @@ export class TimePickerComponent implements OnInit {
     return this.data.selectedDates;
   }
 
+  get year(): string {
+    return this.selectedDates[this.selectedDates.length -1].format('yyyy');
+  }
+
   get monthRange(): string {
     const dates = this.selectedDates;
     if (!this.selectedDates || this.selectedDates.length === 0) return '';
 
     const last = dates[0].format('MMMM');
 
-    const first = dates[this.selectedDates.length - 1].format('MMMM');
+    const first = dates[dates.length - 1].format('MMMM');
     if (first === last) return last;
 
     return `${last} - ${first}`;
