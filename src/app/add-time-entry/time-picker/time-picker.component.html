@@ -2,7 +2,7 @@
     <span *ngIf="monthRange && year">
         {{monthRange}} {{year}}
     </span>
-    <span>
+    <span *ngIf="!monthRange && !year">
         No dates selected
     </span>
 </h1>

@@ -1,0 +1,23 @@
+<div class="calendar">
+  <div class="month">
+    November
+  </div>
+
+  <tr class="week week-header">
+    <div class="day-cell">S</div>
+    <div class="day-cell">M</div>
+    <div class="day-cell">T</div>
+    <div class="day-cell">W</div>
+    <div class="day-cell">T</div>
+    <div class="day-cell">F</div>
+    <div class="day-cell">S</div>
+  </tr>
+
+  <div *ngFor="let week of weeks" class="week">
+    <div *ngFor="let day of week" class="day-cell">
+      <div class="day-cell-content selectable" [class.today]="isToday(day)">
+          {{ day ? day.day : '' }}
+      </div>
+    </div>
+  </div>
+</div>

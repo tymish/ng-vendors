@@ -3,7 +3,8 @@ import {SidenavComponent} from './core/components/sidenav/sidenav.component';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  templateUrl: './app.component.html',
+  styles: ['div.mobile { max-width: 400px; margin: auto;}']
 })
 export class AppComponent implements OnInit {
   @ViewChild('sidenav') sidenav: SidenavComponent;

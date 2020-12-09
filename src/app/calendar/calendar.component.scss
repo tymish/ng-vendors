@@ -1,0 +1,44 @@
+.calendar {
+}
+
+.month{
+  text-align: center;
+  text-transform: uppercase;
+  color: #6c757d;
+}
+.week {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.week-header {
+  color: #6c757d;
+  margin: 1em 0;
+}
+
+.day-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  height: 3em;
+  line-height: 3em;
+  width: 3em;
+  text-align: center;
+  user-select: none;
+}
+
+.day-cell-content {
+  width: 100%;
+  border-radius: 50%;
+}
+
+.day-cell-content.selectable:hover {
+  background-color: rgb(206, 206, 206);
+}
+
+.today {
+  border-width: .8px;
+  border-style: solid;
+  border-color: rgb(206, 204, 204);
+}

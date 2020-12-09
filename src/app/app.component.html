@@ -1,5 +1,7 @@
-<app-toolbar (sidenavToggled)="toggleSidenav()"></app-toolbar>
-
-<app-sidenav #sidenav>
-  <router-outlet></router-outlet>
-</app-sidenav>
+<div class="mobile">
+  <app-toolbar class="mobile" (sidenavToggled)="toggleSidenav()"></app-toolbar>
+  
+  <app-sidenav #sidenav>
+    <router-outlet></router-outlet>
+  </app-sidenav>
+</div>
