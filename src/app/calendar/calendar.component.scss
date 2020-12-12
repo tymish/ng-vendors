@@ -17,6 +17,7 @@
 }
 
 .day-cell {
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,12 +34,48 @@
   border-radius: 50%;
 }
 
+.day-cell-content.selectable {
+  background-color: #fafafa;
+}
+
+.day-cell-content.selected {
+  background-color: rgba(66, 66, 251, 0.781);
+}
+
 .day-cell-content.selectable:hover {
-  background-color: rgb(206, 206, 206);
+  filter: brightness(70%);
 }
 
 .today {
   border-width: .8px;
   border-style: solid;
   border-color: rgb(206, 204, 204);
+}
+
+.time-indicator {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: 15%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.line {
+  width: 20px;
+  height: 2px;
+  border-radius: 10px;
+  margin-top: 1px;
+}
+
+.morning {
+  background-color: red;
+}
+
+.afternoon {
+  background-color: green;
+}
+
+.evening {
+  background-color: blue;
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 enum DayOfWeek {
   Sunday,
   Monday,
@@ -15,6 +14,7 @@ interface Day {
   date: Date;
   day: number;
   dayOfWeek: DayOfWeek;
+  selected?: boolean;
   hasMorning?: boolean;
   hasAfternoon?: boolean;
   hasEvening?: boolean;
@@ -101,5 +101,14 @@ export class CalendarComponent implements OnInit {
     }
 
     return weeks;
+  }
+
+  selectDate(day: Day) {
+    if (!day) return;
+    day.selected = !day.selected;
+  }
+
+  isSelected(day: Day) {
+    return day ? day.selected : false;
   }
 }
