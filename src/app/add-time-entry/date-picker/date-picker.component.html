@@ -1,8 +1,0 @@
-<div>
-    <mat-calendar #calendar
-    (click)="$event.stopPropagation()"
-        (selectedChange)="select($event, calendar)"
-        [dateClass]="isSelectedClass"
-        [dateFilter]="allowPastDates">
-    </mat-calendar>
-</div>

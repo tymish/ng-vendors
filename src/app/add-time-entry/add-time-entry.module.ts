@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { DatePickerComponent } from './date-picker/date-picker.component';
 import { TimePickerComponent } from './time-picker/time-picker.component';
 import { AddTimeEntryComponent } from './add-time-entry.component';
 import { MatModule } from '../mat.module';
-import { CoreModule } from '../core/core.module';
 import { FormsModule } from '@angular/forms';
+import { ComponentsModule } from '../components/components.module';
 
 const routes: Routes = [
   {
@@ -16,12 +15,13 @@ const routes: Routes = [
 ]
 
 @NgModule({
-  declarations: [AddTimeEntryComponent, DatePickerComponent, TimePickerComponent],
+  declarations: [AddTimeEntryComponent, TimePickerComponent],
   imports: [
     CommonModule,
     FormsModule,
     MatModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    ComponentsModule
   ]
 })
 export class AddTimeEntryModule { }

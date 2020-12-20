@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
-import { Moment } from 'moment';
+import { Day } from '../components/calendar/calendar.service';
 import { TimePickerComponent } from './time-picker/time-picker.component';
 
 @Component({
@@ -9,19 +9,14 @@ import { TimePickerComponent } from './time-picker/time-picker.component';
   styleUrls: ['./add-time-entry.component.scss'],
 })
 export class AddTimeEntryComponent implements OnInit {
-  selectedDates: Moment[] = [];
 
   constructor(private bottomSheet: MatBottomSheet) {}
 
   ngOnInit(): void {}
 
-  updateDates(selectedDates: Moment[]) {
-    this.selectedDates = selectedDates.sort((a,b) => a.valueOf() - b.valueOf());
-  }
-
-  openTimePicker() {
+  openTimePicker(selected: Day[]) {
     const ref = this.bottomSheet.open(TimePickerComponent, {
-      data: { selectedDates: this.selectedDates },
+      data: { selectedDates: selected },
     });
   }
 }

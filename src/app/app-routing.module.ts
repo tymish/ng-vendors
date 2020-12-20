@@ -12,7 +12,8 @@ import { RegisterComponent } from './register/register.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    redirectTo: 'add-a-time',
+    pathMatch: 'full'
   },
   {
     path: 'add-a-time',

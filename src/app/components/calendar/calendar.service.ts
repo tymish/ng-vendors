@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 enum DayOfWeek {
   Sunday,
@@ -10,39 +10,23 @@ enum DayOfWeek {
   Saturday
 }
 
-interface Day {
+export interface Day {
   date: Date;
   day: number;
   dayOfWeek: DayOfWeek;
-  selected?: boolean;
+  selected: boolean;
   hasMorning?: boolean;
   hasAfternoon?: boolean;
   hasEvening?: boolean;
 }
 
+@Injectable({providedIn: 'root'})
+export class CalendarService {
 
-@Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
-})
-export class CalendarComponent implements OnInit {
-  weeks: Day[][];
-
-  constructor() { }
-
-  ngOnInit(): void {
+  get thisMonth() {
     const jsDays = this.getAllDaysInMonth();
     const days = this.jsDateToTymishDate(jsDays);
-    this.weeks = this.jsDatesToWeeks(days);
-  }
-
-  isToday(day?: Day) {
-    if (!day) return false;
-    const today = new Date();
-    return day.date.getDate() === today.getDate()
-      && day.date.getFullYear() === today.getFullYear()
-      && day.date.getMonth() === today.getMonth();
+    return this.jsDatesToWeeks(days);
   }
 
   getAllDaysInMonth() {
@@ -64,7 +48,8 @@ export class CalendarComponent implements OnInit {
       return {
         date: d,
         day: d.getDate(),
-        dayOfWeek: d.getDay()
+        dayOfWeek: d.getDay(),
+        selected: false
       }
     });
 
@@ -87,7 +72,7 @@ export class CalendarComponent implements OnInit {
     return this.padFirstAndLastWeekWithEmptyDays(weeks);
   }
 
-  padFirstAndLastWeekWithEmptyDays(weeks: Day[][]) {
+  private padFirstAndLastWeekWithEmptyDays(weeks: Day[][]) {
     if (weeks.length <= 1) return; // this should be impossible
 
     const missingDaysInFirstWeek = 7 - weeks[0].length;
@@ -101,14 +86,5 @@ export class CalendarComponent implements OnInit {
     }
 
     return weeks;
-  }
-
-  selectDate(day: Day) {
-    if (!day) return;
-    day.selected = !day.selected;
-  }
-
-  isSelected(day: Day) {
-    return day ? day.selected : false;
   }
 }

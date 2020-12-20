@@ -17,7 +17,6 @@ import { LoginComponent } from './login/login.component';
 import { InvoiceComponent } from './invoices/invoice/invoice.component';
 import { MyAccountComponent } from './my-account/my-account.component';
 import { TimeEntriesComponent } from './time-entries/time-entries.component';
-import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
   declarations: [
@@ -29,8 +28,7 @@ import { CalendarComponent } from './calendar/calendar.component';
     LoginComponent,
     InvoiceComponent,
     MyAccountComponent,
-    TimeEntriesComponent,
-    CalendarComponent
+    TimeEntriesComponent
   ],
   imports: [
     BrowserModule,

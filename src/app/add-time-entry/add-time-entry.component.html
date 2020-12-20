@@ -1,5 +1,5 @@
 <!-- Back button -->
 
-<app-date-picker (datesSelected)="updateDates($event)"></app-date-picker>
+<app-calendar #calendar></app-calendar>
 
-<button (click)="openTimePicker()">Pick a Time</button>
+<button (click)="openTimePicker(calendar.selectedDays)">Pick a Time</button>

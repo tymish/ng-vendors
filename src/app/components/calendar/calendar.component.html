@@ -14,14 +14,14 @@
   </tr>
 
   <div *ngFor="let week of weeks" class="week">
-    <div *ngFor="let day of week" class="day-cell" (click)="selectDate(day)">
+    <div *ngFor="let day of week" class="day-cell" (click)="selectDate(day)" [class.selected]="isSelected(day)">
       <div class="day-cell-content selectable" [class.today]="isToday(day)" [class.selected]="isSelected(day)">
         {{ day ? day.day : '' }}
       </div>
-      <div class="time-indicator">
-        <div *ngIf="day ? day.hasMorning : false" class="line morning"></div>
-        <div *ngIf="day ? day.hasAfternoon : false" class="line afternoon"></div>
-        <div *ngIf="day ? day.hasEvening : false" class="line evening"></div>
+      <div *ngIf="day" class="time-indicator">
+        <div *ngIf="day.hasMorning" class="line morning"></div>
+        <div *ngIf="day.hasAfternoon" class="line afternoon"></div>
+        <div *ngIf="day.hasEvening" class="line evening"></div>
       </div>
     </div>
   </div>

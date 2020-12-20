@@ -16,7 +16,7 @@ export class SidenavComponent implements OnInit {
   constructor(public auth: AuthService) {}
 
   ngOnInit() {
-    if (screen.width > 975) {
+    if (screen.width > 975 && false) {
       this.sideNavMode = 'side';
       this.sideNavOpened = true;
     }

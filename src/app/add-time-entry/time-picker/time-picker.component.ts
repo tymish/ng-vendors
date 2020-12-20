@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { Moment } from 'moment';
+import { Day } from 'src/app/components/calendar/calendar.service';
 
 export interface Time {
   hour: number;
@@ -9,17 +9,16 @@ export interface Time {
 }
 
 export interface Data {
-  selectedDates: Moment[];
+  selectedDates: Day[];
 }
 
 @Component({
   selector: 'app-time-picker',
   templateUrl: './time-picker.component.html',
-  styleUrls: ['./time-picker.component.scss']
+  styleUrls: ['./time-picker.component.scss'],
 })
 export class TimePickerComponent implements OnInit {
-
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: Data) { }
+  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: Data) {}
   from: Time;
   to: Time;
 
@@ -30,16 +29,19 @@ export class TimePickerComponent implements OnInit {
   }
 
   get year(): string {
-    return this.selectedDates[this.selectedDates.length -1].format('yyyy');
+    return this.selectedDates[this.selectedDates.length - 1]
+      .date
+      .getFullYear()
+      .toString();
   }
 
   get monthRange(): string {
     const dates = this.selectedDates;
     if (!this.selectedDates || this.selectedDates.length === 0) return '';
 
-    const last = dates[0].format('MMMM');
+    const last = dates[0].date.toLocaleString('default', {month: 'long'});
 
-    const first = dates[dates.length - 1].format('MMMM');
+    const first = dates[dates.length - 1].date.toLocaleString('default', {month: 'long'});
     if (first === last) return last;
 
     return `${last} - ${first}`;
