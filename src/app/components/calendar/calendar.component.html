@@ -1,6 +1,6 @@
 <div class="calendar">
   <div class="month">
-    November
+    {{month}}
   </div>
 
   <tr class="week week-header">
@@ -13,7 +13,7 @@
     <div class="day-cell">S</div>
   </tr>
 
-  <div *ngFor="let week of weeks" class="week">
+  <div *ngFor="let week of calendar" class="week">
     <div *ngFor="let day of week" class="day-cell" (click)="selectDate(day)" [class.selected]="isSelected(day)">
       <div class="day-cell-content selectable" [class.today]="isToday(day)" [class.selected]="isSelected(day)">
         {{ day ? day.day : '' }}

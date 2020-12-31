@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarService, Day } from './calendar.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { CalendarService, CalendarDay } from './calendar.service';
 
 @Component({
   selector: 'app-calendar',
@@ -7,19 +7,23 @@ import { CalendarService, Day } from './calendar.service';
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
-  weeks: Day[][];
+  @Input() days: CalendarDay[];
+  calendar: CalendarDay[][];
+  month = this.calendarService.month;
 
   constructor(private calendarService: CalendarService) {}
 
-  get selectedDays(): Day[] {
-    return this.weeks.flat(1).filter((day) => day?.selected);
+  get selectedDays(): CalendarDay[] {
+    return this.days.filter((day) => day?.selected);
   }
 
   ngOnInit(): void {
-    this.weeks = this.calendarService.thisMonth;
+    console.log(this.days);
+    this.calendar = this.calendarService.buildCalendar(this.days);
+    console.log(this.days);
   }
 
-  isToday(day?: Day) {
+  isToday(day?: CalendarDay) {
     if (!day) return false;
     const today = new Date();
     return (
@@ -29,15 +33,12 @@ export class CalendarComponent implements OnInit {
     );
   }
 
-  selectDate(day: Day) {
+  selectDate(day: CalendarDay) {
     if (!day) return;
     day.selected = !day.selected;
-    // day.hasAfternoon = true;
-    // day.hasEvening = true;
-    // day.hasMorning = true;
   }
 
-  isSelected(day: Day) {
+  isSelected(day: CalendarDay) {
     return day ? day.selected : false;
   }
 }

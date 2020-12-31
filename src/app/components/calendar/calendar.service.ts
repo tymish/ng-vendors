@@ -10,7 +10,7 @@ enum DayOfWeek {
   Saturday
 }
 
-export interface Day {
+export interface CalendarDay {
   date: Date;
   day: number;
   dayOfWeek: DayOfWeek;
@@ -23,48 +23,24 @@ export interface Day {
 @Injectable({providedIn: 'root'})
 export class CalendarService {
 
-  get thisMonth() {
-    const jsDays = this.getAllDaysInMonth();
-    const days = this.jsDateToTymishDate(jsDays);
-    return this.jsDatesToWeeks(days);
+  get today(): Date {
+    return new Date();
   }
 
-  getAllDaysInMonth() {
-    const dates: Date[] = [];
-    const today = new Date();
-    const month = today.getMonth();
-    today.setDate(1);
-    
-    while(today.getMonth() === month) {
-      dates.push(new Date(today));
-      today.setDate(today.getDate() + 1);
-    }
-
-    return dates;
+  get month(): string{
+    return this.today.toLocaleDateString('default', { month: 'long'} );
   }
 
-  jsDateToTymishDate(dates: Date[]): Day[] {
-    const days: Day[] = dates.map(d => {
-      return {
-        date: d,
-        day: d.getDate(),
-        dayOfWeek: d.getDay(),
-        selected: false
-      }
-    });
+  buildCalendar(days: CalendarDay[]) {
+    const clonedDays = [...days]; // prevent mutation of parent 'days'
+    const weeks: CalendarDay[][] = [];
 
-    return days;
-  }
-
-  jsDatesToWeeks(dates: Day[]) {
-    const weeks: Day[][] = [];
-
-    while (dates.length > 0) {
-      const nextSunday = dates.findIndex(d => d.dayOfWeek === DayOfWeek.Sunday);
+    while (clonedDays.length > 0) {
+      const nextSunday = clonedDays.findIndex(d => d.dayOfWeek === DayOfWeek.Sunday);
 
       let week = nextSunday !== 0
-        ? dates.splice(0, nextSunday)
-        : dates.splice(nextSunday, 7);
+        ? clonedDays.splice(0, nextSunday)
+        : clonedDays.splice(nextSunday, 7);
 
       weeks.push(week);
     }
@@ -72,7 +48,33 @@ export class CalendarService {
     return this.padFirstAndLastWeekWithEmptyDays(weeks);
   }
 
-  private padFirstAndLastWeekWithEmptyDays(weeks: Day[][]) {
+  map(date: Date): CalendarDay {
+    return {
+      date: date,
+      day: date.getDate(),
+      dayOfWeek: date.getDay(),
+      selected: false
+    }
+  }
+
+  calendarDays(month: number = this.today.getMonth()): CalendarDay[] {
+    return this.dates(month).map(d => this.map(d));
+  }
+
+  dates(month: number): Date[] {
+    const dates: Date[] = [];
+    const day = new Date();
+    day.setDate(1);
+    
+    while(day.getMonth() === month) {
+      dates.push(new Date(day));
+      day.setDate(day.getDate() + 1);
+    }
+
+    return dates;
+  }
+
+  private padFirstAndLastWeekWithEmptyDays(weeks: CalendarDay[][]) {
     if (weeks.length <= 1) return; // this should be impossible
 
     const missingDaysInFirstWeek = 7 - weeks[0].length;

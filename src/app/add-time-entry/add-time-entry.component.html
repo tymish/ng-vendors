@@ -1,5 +1,5 @@
 <!-- Back button -->
 
-<app-calendar #calendar></app-calendar>
+<app-calendar #calendar [days]="days"></app-calendar>
 
 <button (click)="openTimePicker(calendar.selectedDays)">Pick a Time</button>

@@ -1,15 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
-import { Day } from 'src/app/components/calendar/calendar.service';
-
-export interface Time {
-  hour: number;
-  minute: number;
-  second: number;
-}
+import { MatBottomSheetRef, MAT_BOTTOM_SHEET_DATA } from '@angular/material/bottom-sheet';
+import { CalendarDay } from 'src/app/components/calendar/calendar.service';
+import { Time, TimeRange } from '../add-time-entry.component';
 
 export interface Data {
-  selectedDates: Day[];
+  selectedDates: CalendarDay[];
 }
 
 @Component({
@@ -18,7 +13,11 @@ export interface Data {
   styleUrls: ['./time-picker.component.scss'],
 })
 export class TimePickerComponent implements OnInit {
-  constructor(@Inject(MAT_BOTTOM_SHEET_DATA) public data: Data) {}
+  constructor(
+    @Inject(MAT_BOTTOM_SHEET_DATA) public data: Data,
+    private _bottomSheetRef: MatBottomSheetRef<TimePickerComponent>
+  ) {}
+
   from: Time;
   to: Time;
 
@@ -45,5 +44,10 @@ export class TimePickerComponent implements OnInit {
     if (first === last) return last;
 
     return `${last} - ${first}`;
+  }
+
+  save() {
+    const timeRange = {from: this.from, to: this.to};
+    this._bottomSheetRef.dismiss(timeRange);
   }
 }
